@@ -1,0 +1,59 @@
+<?php
+
+use Illuminate\Support\Facades\Route;
+
+// Controller xử lý biểu đồ giá (Task 3)
+use App\Http\Controllers\PriceController;
+// BỔ SUNG: Controller xử lý Lưu cảnh báo giá 
+use App\Http\Controllers\PriceAlertController; 
+
+Route::get('/', function () {
+    return view('welcome');
+});
+
+// Trang chi tiết sản phẩm 
+Route::get('/chi-tiet-san-pham', function () {
+    return view('detail'); 
+});
+
+// Đường dẫn API để JS gọi lấy dữ liệu vẽ biểu đồ
+Route::get('/api/price-history/{id}', [PriceController::class, 'getHistory']);
+
+// BỔ SUNG: Đường dẫn API nhận dữ liệu từ form Cảnh báo giá
+// ->middleware('auth') giúp chặn không cho người chưa đăng nhập gửi dữ liệu
+Route::post('/api/price-alerts', [PriceAlertController::class, 'store'])->middleware('auth');
+
+//dữ liệu giả lập để gửi email
+use Illuminate\Support\Facades\Mail;
+use App\Mail\PriceTargetReachedMail;
+use App\Mail\HistoricalLowestPriceMail;
+
+Route::get('/test-mail-giao-dien', function () {
+    // Dữ liệu giả lập để xem thiết kế email hiển thị có đẹp không
+    $data = [
+        'user_name' => 'Kim Ngân', 
+        'product_name' => 'iPhone 15 Pro Max 256GB',
+        'target_price' => 28000000,
+        'current_price' => 27500000, // Đã giảm 500k so với mong muốn
+        'old_lowest_price' => 27900000, 
+        'best_shop' => 'CellphoneS',
+        'cellphones_price' => 27500000,
+        'fpt_price' => 28500000,
+        'product_url' => url('/chi-tiet-san-pham'),
+        'manage_url' => url('/canh-bao-gia-cua-toi'), 
+    ];
+
+    // Thay bằng email cá nhân của bạn để nhận thư test
+    $emailNhanThu = 'pricetrackeruitgmail.com'; 
+
+    // Gửi mail kịch bản 1: Đạt giá mong muốn
+    Mail::to($emailNhanThu)->send(new PriceTargetReachedMail($data));
+    
+    // Gửi mail kịch bản 2: Giá thấp nhất lịch sử (Bỏ dấu // ở dưới để test)
+    // Mail::to($emailNhanThu)->send(new HistoricalLowestPriceMail($data));
+
+    return 'Đã gửi thành công! Hãy mở Gmail trên điện thoại ra check ngay nhé.';
+});
+Route::get('/', function () {
+    return view('welcome');
+});

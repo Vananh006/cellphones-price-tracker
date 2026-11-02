@@ -1,0 +1,24 @@
+{
+  "cellphones_rows": 19727,
+  "fpt_rows": 19355,
+  "history_rows_imported": 39082,
+  "products": 5,
+  "variants": 49,
+  "store_prices": 98,
+  "matched_variants_2stores": 49,
+  "date_range": [
+    "2026-05-10 01:01:07",
+    "2026-05-31 01:00:00"
+  ],
+  "price_range": [
+    17390000,
+    62490000
+  ],
+  "products_list": [
+    "iPhone 17",
+    "iPhone 17 Pro",
+    "iPhone 17 Pro Max",
+    "iPhone 17e",
+    "iPhone Air"
+  ]
+}
