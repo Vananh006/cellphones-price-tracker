@@ -17,10 +17,14 @@ class AffiliateController extends Controller
             'store_prices.id',
             'products.product_name as product_name',
             'stores.store_name',
-            'store_prices.affiliate_url'
+            'store_prices.affiliate_url',
+            'store_prices.current_price'
+
         )
         ->get();
 
     return view('admin.affiliate.index', compact('links'));
 }
+
+
 }

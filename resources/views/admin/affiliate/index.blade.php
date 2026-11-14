@@ -4,12 +4,14 @@
 
 <h2>Quản lý link Affiliate</h2>
 
+
 <table class="table">
     <thead>
         <tr>
             <th>ID</th>
             <th>Sản phẩm</th>
             <th>Store</th>
+            <th>Giá hiện tại</th>
             <th>Link Affiliate</th>
         </tr>
     </thead>
@@ -20,6 +22,7 @@
             <td>{{ $item->id }}</td>
             <td>{{ $item->product_name }}</td>
             <td>{{ $item->store_name }}</td>
+            <td>{{$item->current_price}}</td>
 
             <td>
                 @if($item->affiliate_url)
