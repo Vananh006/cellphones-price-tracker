@@ -41,6 +41,17 @@ Tự động thu thập giá, lưu lịch sử biến động, so sánh chênh l
 - **Chống lấy nhầm giá**: bỏ qua giá dưới 1.000.000đ, giá phụ kiện và giá trả góp.
 - Mỗi vòng chạy: crawl giá → cập nhật `store_prices` + ghi `price_history` → tạo link affiliate → kiểm tra và gửi email cảnh báo.
 
+## 👩‍💻 Vai trò của tôi
+
+Đồ án nhóm môn **Phát triển ứng dụng web**. Tôi phụ trách **phân hệ quản trị (Admin)**:
+
+- **Dashboard** thống kê tổng quan: số sản phẩm, người dùng, link đang theo dõi, cảnh báo giá.
+- **CRUD** sản phẩm, link sản phẩm theo từng sàn, người dùng, cảnh báo giá và danh sách yêu thích (Laravel resource controller).
+- **Quản lý link affiliate** kèm giá hiện tại, **xuất CSV** và **trang báo cáo**.
+- Phân quyền truy cập khu vực admin bằng middleware `auth` + `admin`.
+
+Mã nguồn chính: [`app/Http/Controllers/Admin/`](app/Http/Controllers/Admin), [`resources/views/admin/`](resources/views/admin).
+
 ## 🏗️ Kiến trúc
 
 ```
@@ -154,5 +165,5 @@ Giá được thu thập từ website công khai của CellphoneS và FPT Shop p
 ---
 
 <div align="center">
-Đồ án môn học · Nhóm 3
+Đồ án môn Phát triển ứng dụng web · Nhóm 3
 </div>
