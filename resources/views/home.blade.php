@@ -413,12 +413,10 @@
             </div>
 
             <div class="d-flex gap-2 flex-wrap mb-4">
-                <button type="button" class="model-chip active" onclick="setKeyword('')"><i class="fa-solid fa-layer-group"></i> Tất cả</button>
-                <button type="button" class="model-chip" onclick="setKeyword('iphone 13')">iPhone 13</button>
-                <button type="button" class="model-chip" onclick="setKeyword('iphone 14')">iPhone 14</button>
-                <button type="button" class="model-chip" onclick="setKeyword('iphone 15')">iPhone 15</button>
-                <button type="button" class="model-chip" onclick="setKeyword('iphone 16')">iPhone 16</button>
-                <button type="button" class="model-chip" onclick="setKeyword('iphone 17')">iPhone 17</button>
+                <button type="button" class="model-chip active" onclick="setModel('', this)"><i class="fa-solid fa-layer-group"></i> Tất cả</button>
+                @foreach($products->pluck('product_name')->sort(SORT_NATURAL) as $modelName)
+                    <button type="button" class="model-chip" onclick="setModel(@js(mb_strtolower($modelName)), this)">{{ $modelName }}</button>
+                @endforeach
             </div>
 
             @if($products->isEmpty())
@@ -468,6 +466,21 @@
                                     <div class="price">{{ $formatVnd($currentPrice) }}</div>
                                 </div>
 
+                                @if($item->store_prices->count() > 1)
+                                    <div class="mb-3 small fw-semibold">
+                                        @foreach($item->store_prices as $sp)
+                                            <div class="d-flex justify-content-between {{ $loop->first ? 'text-success' : 'text-muted' }}">
+                                                <span>{{ $sp->store_name }}</span>
+                                                <span>{{ $formatVnd($sp->current_price) }}</span>
+                                            </div>
+                                        @endforeach
+                                        <div class="d-flex justify-content-between border-top mt-1 pt-1">
+                                            <span>Chênh lệch</span>
+                                            <span>{{ $item->variant_gap > 0 ? $formatVnd($item->variant_gap) : 'Bằng giá' }}</span>
+                                        </div>
+                                    </div>
+                                @endif
+
                                 <div class="d-grid gap-2">
                                     <a href="{{ route('product.detail', $item->id) }}" class="btn-main">
                                         <i class="fa-solid fa-circle-info"></i> Xem chi tiết
@@ -504,9 +517,13 @@
         });
     }
 
-    function setKeyword(keyword) {
-        document.getElementById('searchInput').value = keyword;
-        filterProducts();
+    // Lọc đúng tên mẫu, để bấm "iPhone 17" không hiện luôn 17 Pro / 17 Pro Max.
+    function setModel(model, chip) {
+        document.getElementById('searchInput').value = '';
+        document.querySelectorAll('.model-chip').forEach(c => c.classList.toggle('active', c === chip));
+        document.querySelectorAll('.product-item').forEach(item => {
+            item.style.display = !model || item.dataset.name === model ? '' : 'none';
+        });
     }
 
     document.getElementById('searchInput')?.addEventListener('keyup', filterProducts);

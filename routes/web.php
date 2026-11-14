@@ -119,6 +119,14 @@ Route::get('/', function (Request $request) {
         $product->variant_storage = $product->storage;
         $product->variant_color = $product->color;
 
+        // Giá của từng sàn cho cùng phiên bản đang có giá tốt nhất, để so sánh ngay trên thẻ sản phẩm.
+        $product->store_prices = $bestPrice
+            ? $prices->where('variant_id', $bestPrice->variant_id)->sortBy('current_price')->values()
+            : collect();
+        $product->variant_gap = $product->store_prices->count() > 1
+            ? (float) $product->store_prices->last()->current_price - (float) $product->store_prices->first()->current_price
+            : 0;
+
         $product->lowest_price = $bestPrice->current_price ?? null;
         $product->highest_price = $highestPrice->current_price ?? null;
 
