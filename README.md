@@ -161,9 +161,3 @@ database.sql               # Dữ liệu mẫu iPhone 17 (sản phẩm, biến t
 ## ⚠️ Lưu ý
 
 Giá được thu thập từ website công khai của CellphoneS và FPT Shop phục vụ mục đích học tập. Khi các trang này thay đổi giao diện, bộ crawler có thể cần cập nhật lại.
-
----
-
-<div align="center">
-Đồ án môn Phát triển ứng dụng web · Nhóm 3
-</div>
