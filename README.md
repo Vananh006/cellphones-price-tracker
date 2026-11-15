@@ -109,15 +109,6 @@ php artisan serve
 
 Mở http://127.0.0.1:8000
 
-**Trên Windows** có sẵn các file chạy nhanh:
-
-| File | Chức năng |
-|---|---|
-| `00_SETUP_LAN_DAU.bat` | Cài thư viện, tạo `.env`, APP_KEY, import database |
-| `04_START_ALL.bat` | Mở web + bot cào giá nền cùng lúc |
-| `05_TEST_CRAWL_1_VONG.bat` | Chạy thử 1 vòng cào giá |
-| `06_KIEM_TRA_DATABASE.bat` | Xem số link đã có giá, số dòng lịch sử |
-
 ### Lệnh Artisan
 
 ```bash
